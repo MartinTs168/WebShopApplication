@@ -24,7 +24,56 @@ namespace WebShopApp.Infrastructure.Data.Extensions
             await RoleSeeder(services);
             await SeedAdministrator(services);
 
+            var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+            await SeedCategories(context);
+            await SeedBrands(context);
+
             return app;
+        }
+
+        private static async Task SeedBrands(ApplicationDbContext context)
+        {
+            if (context.Brands.Any())
+            {
+                return;
+            }
+
+            await context.Brands.AddRangeAsync(new[]
+            {
+                new Brand {BrandName = "Acer"},
+                new Brand {BrandName = "Asus"},
+                new Brand {BrandName = "Apple"},
+                new Brand {BrandName = "Dell"},
+                new Brand {BrandName = "HP"},
+                new Brand {BrandName = "Huawei"},
+                new Brand {BrandName = "Lenovo"},
+                new Brand {BrandName = "Samsung"},
+            });
+
+            await context.SaveChangesAsync();
+        }
+
+        private static async Task SeedCategories(ApplicationDbContext context)
+        {
+            if(context.Categories.Any())
+            {
+                return;
+            }
+
+            await context.Categories.AddRangeAsync(new[]
+            {
+                new Category {CategoryName = "Laptop"},
+                new Category {CategoryName = "Computer"},
+                new Category {CategoryName = "Monitor"},
+                new Category {CategoryName = "Accessory"},
+                new Category {CategoryName = "TV"},
+                new Category {CategoryName = "Mobile Phone"},
+                new Category {CategoryName = "Smart watch"},
+        
+            });
+
+            await context.SaveChangesAsync();
         }
 
         private static async Task RoleSeeder(IServiceProvider serviceProvider)
