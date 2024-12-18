@@ -35,9 +35,9 @@ namespace WebShopApp.Infrastructure.Data.Entities
         public string UserId { get; set; } = null!;
 
         [ForeignKey(nameof(ProductId))]
-        public Product Product { get; set; } = null!;
+        public virtual Product Product { get; set; } = null!;
 
         [ForeignKey(nameof(UserId))]
-        public ApplicationUser User { get; set; } = null!;
+        public virtual ApplicationUser User { get; set; } = null!;
     }
 }
